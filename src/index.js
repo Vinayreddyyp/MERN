@@ -70,15 +70,15 @@ app.get('/tasks', async(req, res) => {
 app.get('/tasks/:id', async(req, res) => {
 	const _id = req.params.id;
 
-	try {
-		const task = await Task.findById(_id);
-		if(!task) {
-			res.status(404).send()
-		}
-		res.send(task);
-	}catch(err) {
-       res.status(400).send(e)
-	}
+	// try {
+	// 	const task = await Task.findById(_id);
+	// 	if(!task) {
+	// 		res.status(404).send()
+	// 	}
+	// 	res.send(task);
+	// }catch(err) {
+    //    res.status(400).send(e)
+	// }
 	
 });
 
