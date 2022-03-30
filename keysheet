@@ -1,0 +1,21 @@
+ls -a -l ~/.ssh //checking ssh keys
+ssh-keygen -t rsa -b 4096 -C "ypvinayreddy@gmail.com" //generating ssh key in to the folder
+eval "$(ssh-agent-s)"
+ ssh-add -K ~/.ssh/id_rsa
+ cat  ~/.ssh/id_rsa.pub
+
+ deploying steps to heroku:
+
+heroku login
+ heroku keys:add
+ heroku create app-name:
+ after creating in heroku we need to change the config in package.json and 
+ push to heroku master
+
+ mongodb connection and running 
+
+ put mongodb in user and create other folder mongodb-data and run the below command
+ /Users/vinayreddy/mongodb/bin/mongod --dbpath=/Users/vinayreddy/mongodb-data 
+
+
+  I am suing the best keyboard in the world i really like it and today i made great progress
