@@ -77,6 +77,8 @@ userSchema.statics.findByCredentials = async (email, password) => {
 	return user;
 }
 
+//user chainging password 
+
 userSchema.pre('save', async function(next) {
 	const user = this;
 	if(user.isModified('password')) {
