@@ -1,25 +1,25 @@
 const jwt = require('jsonwebtoken');
-const User = require('../models/users');
+const User = require('../models/user');
 
-const auth = async(req, res, next) => {
-    console.log('auth is working');
-     
+const auth = async (req, res, next) => {
     try {
-        const token = req.header('Authorization').replace('Bearer ', '');
-      
-        const decoded = jwt.verify(token, 'thisismynewcourse');
-       
-        const user = await User.findOne({_id: decoded._id, 'tokens.token': token});
-        if(!user) {
-            throw new Error('user is not loded');
+        const token = req.header('Authorization').replace('Bearer ', '')
+        const decoded = jwt.verify(token, 'thisismynewcourse')
+        const user = await User.findOne({ _id: decoded._id, 'tokens.token': token })
+
+        if (!user) {
+            throw new Error()
         }
-        req.token = token;
-        console.log('req.token', req.token);
-        req.user = user;
-        next();
-    } catch(e) {
-       res.status(401).send({error: 'please authenticate'})
+
+        console.log('req.token',req.token)
+
+        req.token = token
+        req.user = user
+        next()
+    } catch (e) {
+        res.status(401).send({ error: 'Please authenticate.' })
     }
 }
+
 
 module.exports = auth;
