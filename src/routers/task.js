@@ -21,12 +21,14 @@ router.post('/tasks',auth,  async(req, res) => {
 		res.status(500).send(e);
 	}
 });
-router.get('/tasks', async(req, res) => {
+router.get('/tasks', auth, async(req, res) => {
 	
 	try {
-		const tasks = await Task.find({});
-		console.log('tasks', tasks);
-		res.status(201).send(tasks)
+		/* const tasks = await Task.find({}); */
+		await req.user.populate("tasks")
+		res.send(req.user.tasks);
+		console.log('tasks', req.user.tasks);
+		res.status(201).send(req.user.tasks);
 	} catch(e) {
 		res.status(200).send(e);
 	}
