@@ -23,11 +23,20 @@ router.post('/tasks',auth,  async(req, res) => {
 });
 router.get('/tasks', auth, async(req, res) => {
 	
+	const match = {};
+	console.log('match', match);
+	if(req.query.completed) {
+		console.log('req.query.completed', req.query.completed);
+         match.completed = req.query.completed === 'true';
+	}
 	try {
 		/* const tasks = await Task.find({}); */
-		await req.user.populate("tasks")
+		await req.user.populate({
+			path: 'tasks',
+			match, 
+		}).execPopulate()
 		res.send(req.user.tasks);
-		console.log('tasks', req.user.tasks);
+		
 		res.status(201).send(req.user.tasks);
 	} catch(e) {
 		res.status(200).send(e);
@@ -64,16 +73,17 @@ router.get('/tasks/:id', async(req, res) => {
 		}
 		res.send(task);
 	}catch(err) {
-       res.status(400).send(e)
+       res.status(400).send(err)
 	}
 	
 });
 
 
 
-router.delete('/task/:id', async(req, res) => {
+router.delete('/task/:id', auth , async(req, res) => {
 	try {
-		const tasks = await Task.findByIdAndDelete(req.params.id);
+		//const tasks = await Task.findByIdAndDelete(req.params.id);
+		const task = await Task.findOneAndDelete({ _id: req.params.id, owner: req.user._id})
 		if(!tasks) {
 			res.send(404).send({'Error': 'Task not found'});
 
