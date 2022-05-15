@@ -46,7 +46,12 @@ const userSchema = new mongoose.Schema({
             type: String,
             required: true
         }
-    }]
+    }],
+    avatar: {
+        type: Buffer,
+    }
+}, {
+    timestamp: true
 });
 
 userSchema.virtual('tasks',{ 
