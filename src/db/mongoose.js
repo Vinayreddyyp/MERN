@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 
 //connecting to the database
-mongoose.connect('mongodb://127.0.0.1:27017/tak-manager-api', {
+mongoose.connect('process.env.MONGODB_URL', {
 	useNewUrlParser: true,
 });
 
