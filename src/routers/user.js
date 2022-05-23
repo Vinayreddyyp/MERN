@@ -2,7 +2,7 @@ const express = require('express')
 const User = require('../models/user')
 const auth = require('../middleware/auth')
 const multer = require('multer');
-const {sendWelcomeEmail} = require('../emails/account')
+const {sendWelcomeEmail,sendCancelationEmail} = require('../emails/account')
 
 const router = new express.Router()
 
@@ -78,7 +78,8 @@ router.patch('/users/me', auth, async (req, res) => {
 
 router.delete('/users/me', auth, async (req, res) => {
     try {
-        await req.user.remove()
+        await req.user.remove();
+        sendCancelationEmail(req.user.email, req.user.name);
         res.send(req.user)
     } catch (e) {
         res.status(500).send()
